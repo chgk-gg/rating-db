@@ -2,6 +2,8 @@ name: Create sqlite backup
 
 on:
   workflow_dispatch:
+  cron:
+    - '0 3 * * *'
 
 jobs:
   update_schema:
@@ -27,6 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
+      - run: uv tool install "db-to-sqlite[postgresql]"
 
       - name: Install PostgreSQL 15 client
         run: |
@@ -50,15 +53,26 @@ jobs:
 
       - name: Run db-to-sqlite for public
         run: |
-          uvx db-to-sqlite "postgresql://postgres:password@localhost:5432/postgres" \ 
+          mkdir sqlite
+          uvx db-to-sqlite "postgresql://postgres:password@localhost:5432/postgres" \
             sqlite/${{ steps.date.outputs.yesterday }}_public.sqlite \
             --all \
-            --postgres-schema b \
+            --postgres-schema public \
             --progress \
             --skip django_migrations --skip django_admin_log --skip django_content_type --skip django_session \
             --skip ar_internal_metadata --skip auth_group_permissions --skip auth_group --skip auth_permission \
             --skip auth_user --skip auth_user_groups --skip auth_user_user_permissions --skip schema_migrations \
             --skip ndcg --skip models
+
+      - name: Run db-to-sqlite for b
+        run: |
+          uvx db-to-sqlite "postgresql://postgres:password@localhost:5432/postgres" \
+            sqlite/${{ steps.date.outputs.yesterday }}_b.sqlite \
+            --all \
+            --postgres-schema b \
+            --progress \
+            --skip django_migrations --skip team_rating_by_player --skip team_lost_heredity \ 
+            --skip player_rating_by_tournament --skip player_rating
 
       - uses: ryand56/r2-upload-action@latest
         with:
@@ -67,4 +81,4 @@ jobs:
           r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           r2-bucket: ${{ secrets.R2_BUCKET }}
           source-dir: sqlite
-          destination-dir: ./new
+          destination-dir: ./
