@@ -1,0 +1,70 @@
+name: Create sqlite backup
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update_schema:
+    runs-on: ubuntu-latest
+
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: postgres
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Install PostgreSQL 15 client
+        run: |
+          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-15
+
+      - name: Calculate yesterday’s date
+        id: date
+        run: echo "yesterday=$(date -d 'yesterday' +%Y-%m-%d)" >> $GITHUB_OUTPUT
+
+      - name: Download Postgres backup
+        run: |
+          curl -o backup.backup "https://pub-5200ce7fb4b64b5ea3b6b0b0f05cfcd5.r2.dev/${{ steps.date.outputs.yesterday }}_rating.backup"
+
+      - name: Restore backup
+        run: |
+          psql -U postgres -d postgres -c "DROP SCHEMA public CASCADE;"
+          pg_restore --dbname=postgres --username=postgres backup.backup
+
+      - name: Run db-to-sqlite for public
+        run: |
+          uvx db-to-sqlite "postgresql://postgres:password@localhost:5432/postgres" \ 
+            sqlite/${{ steps.date.outputs.yesterday }}_public.sqlite \
+            --all \
+            --postgres-schema b \
+            --progress \
+            --skip django_migrations --skip django_admin_log --skip django_content_type --skip django_session \
+            --skip ar_internal_metadata --skip auth_group_permissions --skip auth_group --skip auth_permission \
+            --skip auth_user --skip auth_user_groups --skip auth_user_user_permissions --skip schema_migrations \
+            --skip ndcg --skip models
+
+      - uses: ryand56/r2-upload-action@latest
+        with:
+          r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+          r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          r2-bucket: ${{ secrets.R2_BUCKET }}
+          source-dir: sqlite
+          destination-dir: ./new
