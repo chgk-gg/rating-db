@@ -71,7 +71,7 @@ jobs:
             --all \
             --postgres-schema b \
             --progress \
-            --skip django_migrations --skip team_rating_by_player --skip team_lost_heredity \ 
+            --skip django_migrations --skip team_rating_by_player --skip team_lost_heredity \
             --skip player_rating_by_tournament --skip player_rating
 
       - uses: ryand56/r2-upload-action@latest
