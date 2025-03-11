@@ -2,8 +2,8 @@ name: Create sqlite backup
 
 on:
   workflow_dispatch:
-  cron:
-    - '0 3 * * *'
+  schedule:
+    - cron: '0 3 * * *'
 
 jobs:
   update_schema:
