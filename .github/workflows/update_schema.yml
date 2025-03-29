@@ -65,3 +65,5 @@ jobs:
             - Backup date: ${{ steps.date.outputs.yesterday }}
           branch: update-schema
           delete-branch: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sign-commits: true
