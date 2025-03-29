@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.8 (Debian 15.8-1.pgdg120+1)
--- Dumped by pg_dump version 15.8 (Ubuntu 15.8-1.pgdg22.04+1)
+-- Dumped from database version 15.12 (Debian 15.12-1.pgdg120+1)
+-- Dumped by pg_dump version 16.8 (Ubuntu 16.8-1.pgdg24.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -73,7 +73,7 @@ CREATE SEQUENCE b."b.release_details_id_seq"
     CACHE 1;
 
 
-ALTER TABLE b."b.release_details_id_seq" OWNER TO postgres;
+ALTER SEQUENCE b."b.release_details_id_seq" OWNER TO postgres;
 
 --
 -- Name: b.release_details_id_seq; Type: SEQUENCE OWNED BY; Schema: b; Owner: postgres
@@ -108,7 +108,7 @@ CREATE SEQUENCE b.django_migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE b.django_migrations_id_seq OWNER TO postgres;
+ALTER SEQUENCE b.django_migrations_id_seq OWNER TO postgres;
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: b; Owner: postgres
@@ -148,7 +148,7 @@ CREATE MATERIALIZED VIEW b.player_ranking AS
   WITH NO DATA;
 
 
-ALTER TABLE b.player_ranking OWNER TO postgres;
+ALTER MATERIALIZED VIEW b.player_ranking OWNER TO postgres;
 
 --
 -- Name: player_rating_by_tournament_id_seq_new; Type: SEQUENCE; Schema: b; Owner: postgres
@@ -162,7 +162,7 @@ CREATE SEQUENCE b.player_rating_by_tournament_id_seq_new
     CACHE 1;
 
 
-ALTER TABLE b.player_rating_by_tournament_id_seq_new OWNER TO postgres;
+ALTER SEQUENCE b.player_rating_by_tournament_id_seq_new OWNER TO postgres;
 
 --
 -- Name: player_rating_by_tournament; Type: TABLE; Schema: b; Owner: postgres
@@ -177,7 +177,8 @@ CREATE TABLE b.player_rating_by_tournament (
     tournament_result_id bigint,
     initial_score integer,
     tournament_id integer
-);
+)
+WITH (autovacuum_analyze_threshold='10000', autovacuum_analyze_scale_factor='0.05', autovacuum_vacuum_threshold='10000', autovacuum_vacuum_scale_factor='0.01', autovacuum_vacuum_cost_delay='0');
 
 
 ALTER TABLE b.player_rating_by_tournament OWNER TO postgres;
@@ -194,7 +195,7 @@ CREATE SEQUENCE b.player_rating_id_seq
     CACHE 1;
 
 
-ALTER TABLE b.player_rating_id_seq OWNER TO postgres;
+ALTER SEQUENCE b.player_rating_id_seq OWNER TO postgres;
 
 --
 -- Name: player_rating_id_seq1; Type: SEQUENCE; Schema: b; Owner: postgres
@@ -208,7 +209,7 @@ CREATE SEQUENCE b.player_rating_id_seq1
     CACHE 1;
 
 
-ALTER TABLE b.player_rating_id_seq1 OWNER TO postgres;
+ALTER SEQUENCE b.player_rating_id_seq1 OWNER TO postgres;
 
 --
 -- Name: player_rating_id_seq1; Type: SEQUENCE OWNED BY; Schema: b; Owner: postgres
@@ -248,7 +249,7 @@ CREATE SEQUENCE b.releases_id_seq
     CACHE 1;
 
 
-ALTER TABLE b.releases_id_seq OWNER TO postgres;
+ALTER SEQUENCE b.releases_id_seq OWNER TO postgres;
 
 --
 -- Name: releases_id_seq; Type: SEQUENCE OWNED BY; Schema: b; Owner: postgres
@@ -283,7 +284,7 @@ CREATE SEQUENCE b.team_lost_heredity_id_seq
     CACHE 1;
 
 
-ALTER TABLE b.team_lost_heredity_id_seq OWNER TO postgres;
+ALTER SEQUENCE b.team_lost_heredity_id_seq OWNER TO postgres;
 
 --
 -- Name: team_lost_heredity_id_seq; Type: SEQUENCE OWNED BY; Schema: b; Owner: postgres
@@ -307,7 +308,7 @@ CREATE MATERIALIZED VIEW b.team_ranking AS
   WITH NO DATA;
 
 
-ALTER TABLE b.team_ranking OWNER TO postgres;
+ALTER MATERIALIZED VIEW b.team_ranking OWNER TO postgres;
 
 --
 -- Name: team_rating_by_player; Type: TABLE; Schema: b; Owner: postgres
@@ -336,7 +337,7 @@ CREATE SEQUENCE b.team_rating_by_player_id_seq
     CACHE 1;
 
 
-ALTER TABLE b.team_rating_by_player_id_seq OWNER TO postgres;
+ALTER SEQUENCE b.team_rating_by_player_id_seq OWNER TO postgres;
 
 --
 -- Name: team_rating_by_player_id_seq; Type: SEQUENCE OWNED BY; Schema: b; Owner: postgres
@@ -370,7 +371,7 @@ CREATE SEQUENCE b.tournament_in_release_id_seq
     CACHE 1;
 
 
-ALTER TABLE b.tournament_in_release_id_seq OWNER TO postgres;
+ALTER SEQUENCE b.tournament_in_release_id_seq OWNER TO postgres;
 
 --
 -- Name: tournament_in_release_id_seq; Type: SEQUENCE OWNED BY; Schema: b; Owner: postgres
@@ -391,7 +392,7 @@ CREATE SEQUENCE b.tournament_results_id_seq_new
     CACHE 1;
 
 
-ALTER TABLE b.tournament_results_id_seq_new OWNER TO postgres;
+ALTER SEQUENCE b.tournament_results_id_seq_new OWNER TO postgres;
 
 --
 -- Name: tournament_result; Type: TABLE; Schema: b; Owner: postgres
@@ -457,7 +458,7 @@ CREATE SEQUENCE public.auth_group_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.auth_group_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -492,7 +493,7 @@ CREATE SEQUENCE public.auth_group_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -528,7 +529,7 @@ CREATE SEQUENCE public.auth_permission_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.auth_permission_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -584,7 +585,7 @@ CREATE SEQUENCE public.auth_user_groups_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_user_groups_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -606,7 +607,7 @@ CREATE SEQUENCE public.auth_user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_user_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.auth_user_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -641,7 +642,7 @@ CREATE SEQUENCE public.auth_user_user_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -680,7 +681,7 @@ CREATE SEQUENCE public.base_rosters_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.base_rosters_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.base_rosters_id_seq OWNER TO postgres;
 
 --
 -- Name: base_rosters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -721,7 +722,7 @@ CREATE SEQUENCE public.django_admin_log_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.django_admin_log_id_seq OWNER TO postgres;
 
 --
 -- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -756,7 +757,7 @@ CREATE SEQUENCE public.django_content_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.django_content_type_id_seq OWNER TO postgres;
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -792,7 +793,7 @@ CREATE SEQUENCE public.django_migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.django_migrations_id_seq OWNER TO postgres;
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -842,7 +843,7 @@ CREATE SEQUENCE public.models_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.models_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.models_id_seq OWNER TO postgres;
 
 --
 -- Name: models_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -934,7 +935,7 @@ CREATE SEQUENCE public.rosters_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.rosters_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.rosters_id_seq OWNER TO postgres;
 
 --
 -- Name: rosters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -967,6 +968,419 @@ CREATE TABLE public.seasons (
 
 
 ALTER TABLE public.seasons OWNER TO postgres;
+
+--
+-- Name: solid_queue_blocked_executions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_blocked_executions (
+    id bigint NOT NULL,
+    job_id bigint NOT NULL,
+    queue_name character varying NOT NULL,
+    priority integer DEFAULT 0 NOT NULL,
+    concurrency_key character varying NOT NULL,
+    expires_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_blocked_executions OWNER TO postgres;
+
+--
+-- Name: solid_queue_blocked_executions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_blocked_executions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_blocked_executions_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_blocked_executions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_blocked_executions_id_seq OWNED BY public.solid_queue_blocked_executions.id;
+
+
+--
+-- Name: solid_queue_claimed_executions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_claimed_executions (
+    id bigint NOT NULL,
+    job_id bigint NOT NULL,
+    process_id bigint,
+    created_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_claimed_executions OWNER TO postgres;
+
+--
+-- Name: solid_queue_claimed_executions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_claimed_executions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_claimed_executions_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_claimed_executions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_claimed_executions_id_seq OWNED BY public.solid_queue_claimed_executions.id;
+
+
+--
+-- Name: solid_queue_failed_executions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_failed_executions (
+    id bigint NOT NULL,
+    job_id bigint NOT NULL,
+    error text,
+    created_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_failed_executions OWNER TO postgres;
+
+--
+-- Name: solid_queue_failed_executions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_failed_executions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_failed_executions_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_failed_executions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_failed_executions_id_seq OWNED BY public.solid_queue_failed_executions.id;
+
+
+--
+-- Name: solid_queue_jobs; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_jobs (
+    id bigint NOT NULL,
+    queue_name character varying NOT NULL,
+    class_name character varying NOT NULL,
+    arguments text,
+    priority integer DEFAULT 0 NOT NULL,
+    active_job_id character varying,
+    scheduled_at timestamp(6) without time zone,
+    finished_at timestamp(6) without time zone,
+    concurrency_key character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_jobs OWNER TO postgres;
+
+--
+-- Name: solid_queue_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_jobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_jobs_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_jobs_id_seq OWNED BY public.solid_queue_jobs.id;
+
+
+--
+-- Name: solid_queue_pauses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_pauses (
+    id bigint NOT NULL,
+    queue_name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_pauses OWNER TO postgres;
+
+--
+-- Name: solid_queue_pauses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_pauses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_pauses_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_pauses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_pauses_id_seq OWNED BY public.solid_queue_pauses.id;
+
+
+--
+-- Name: solid_queue_processes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_processes (
+    id bigint NOT NULL,
+    kind character varying NOT NULL,
+    last_heartbeat_at timestamp(6) without time zone NOT NULL,
+    supervisor_id bigint,
+    pid integer NOT NULL,
+    hostname character varying,
+    metadata text,
+    created_at timestamp(6) without time zone NOT NULL,
+    name character varying NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_processes OWNER TO postgres;
+
+--
+-- Name: solid_queue_processes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_processes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_processes_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_processes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_processes_id_seq OWNED BY public.solid_queue_processes.id;
+
+
+--
+-- Name: solid_queue_ready_executions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_ready_executions (
+    id bigint NOT NULL,
+    job_id bigint NOT NULL,
+    queue_name character varying NOT NULL,
+    priority integer DEFAULT 0 NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_ready_executions OWNER TO postgres;
+
+--
+-- Name: solid_queue_ready_executions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_ready_executions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_ready_executions_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_ready_executions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_ready_executions_id_seq OWNED BY public.solid_queue_ready_executions.id;
+
+
+--
+-- Name: solid_queue_recurring_executions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_recurring_executions (
+    id bigint NOT NULL,
+    job_id bigint NOT NULL,
+    task_key character varying NOT NULL,
+    run_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_recurring_executions OWNER TO postgres;
+
+--
+-- Name: solid_queue_recurring_executions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_recurring_executions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_recurring_executions_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_recurring_executions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_recurring_executions_id_seq OWNED BY public.solid_queue_recurring_executions.id;
+
+
+--
+-- Name: solid_queue_recurring_tasks; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_recurring_tasks (
+    id bigint NOT NULL,
+    key character varying NOT NULL,
+    schedule character varying NOT NULL,
+    command character varying(2048),
+    class_name character varying,
+    arguments text,
+    queue_name character varying,
+    priority integer DEFAULT 0,
+    static boolean DEFAULT true NOT NULL,
+    description text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_recurring_tasks OWNER TO postgres;
+
+--
+-- Name: solid_queue_recurring_tasks_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_recurring_tasks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_recurring_tasks_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_recurring_tasks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_recurring_tasks_id_seq OWNED BY public.solid_queue_recurring_tasks.id;
+
+
+--
+-- Name: solid_queue_scheduled_executions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_scheduled_executions (
+    id bigint NOT NULL,
+    job_id bigint NOT NULL,
+    queue_name character varying NOT NULL,
+    priority integer DEFAULT 0 NOT NULL,
+    scheduled_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_scheduled_executions OWNER TO postgres;
+
+--
+-- Name: solid_queue_scheduled_executions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_scheduled_executions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_scheduled_executions_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_scheduled_executions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_scheduled_executions_id_seq OWNED BY public.solid_queue_scheduled_executions.id;
+
+
+--
+-- Name: solid_queue_semaphores; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.solid_queue_semaphores (
+    id bigint NOT NULL,
+    key character varying NOT NULL,
+    value integer DEFAULT 1 NOT NULL,
+    expires_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solid_queue_semaphores OWNER TO postgres;
+
+--
+-- Name: solid_queue_semaphores_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.solid_queue_semaphores_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.solid_queue_semaphores_id_seq OWNER TO postgres;
+
+--
+-- Name: solid_queue_semaphores_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.solid_queue_semaphores_id_seq OWNED BY public.solid_queue_semaphores.id;
+
 
 --
 -- Name: teams; Type: TABLE; Schema: public; Owner: postgres
@@ -1016,7 +1430,7 @@ CREATE SEQUENCE public.tournament_results_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tournament_results_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.tournament_results_id_seq OWNER TO postgres;
 
 --
 -- Name: tournament_results_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -1055,7 +1469,7 @@ CREATE SEQUENCE public.tournament_rosters_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tournament_rosters_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.tournament_rosters_id_seq OWNER TO postgres;
 
 --
 -- Name: tournament_rosters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -1130,7 +1544,7 @@ CREATE SEQUENCE public.true_dls_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.true_dls_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.true_dls_id_seq OWNER TO postgres;
 
 --
 -- Name: true_dls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -1166,7 +1580,7 @@ CREATE SEQUENCE public.wrong_team_ids_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.wrong_team_ids_id_seq OWNER TO postgres;
+ALTER SEQUENCE public.wrong_team_ids_id_seq OWNER TO postgres;
 
 --
 -- Name: wrong_team_ids_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -1306,6 +1720,83 @@ ALTER TABLE ONLY public.models ALTER COLUMN id SET DEFAULT nextval('public.model
 --
 
 ALTER TABLE ONLY public.rosters ALTER COLUMN id SET DEFAULT nextval('public.rosters_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_blocked_executions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_blocked_executions ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_blocked_executions_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_claimed_executions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_claimed_executions ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_claimed_executions_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_failed_executions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_failed_executions ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_failed_executions_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_jobs id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_jobs ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_jobs_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_pauses id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_pauses ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_pauses_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_processes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_processes ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_processes_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_ready_executions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_ready_executions ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_ready_executions_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_recurring_executions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_recurring_executions ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_recurring_executions_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_recurring_tasks id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_recurring_tasks ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_recurring_tasks_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_scheduled_executions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_scheduled_executions ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_scheduled_executions_id_seq'::regclass);
+
+
+--
+-- Name: solid_queue_semaphores id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_semaphores ALTER COLUMN id SET DEFAULT nextval('public.solid_queue_semaphores_id_seq'::regclass);
 
 
 --
@@ -1625,6 +2116,94 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: solid_queue_blocked_executions solid_queue_blocked_executions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_blocked_executions
+    ADD CONSTRAINT solid_queue_blocked_executions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_claimed_executions solid_queue_claimed_executions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_claimed_executions
+    ADD CONSTRAINT solid_queue_claimed_executions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_failed_executions solid_queue_failed_executions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_failed_executions
+    ADD CONSTRAINT solid_queue_failed_executions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_jobs solid_queue_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_jobs
+    ADD CONSTRAINT solid_queue_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_pauses solid_queue_pauses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_pauses
+    ADD CONSTRAINT solid_queue_pauses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_processes solid_queue_processes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_processes
+    ADD CONSTRAINT solid_queue_processes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_ready_executions solid_queue_ready_executions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_ready_executions
+    ADD CONSTRAINT solid_queue_ready_executions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_recurring_executions solid_queue_recurring_executions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_recurring_executions
+    ADD CONSTRAINT solid_queue_recurring_executions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_recurring_tasks solid_queue_recurring_tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_recurring_tasks
+    ADD CONSTRAINT solid_queue_recurring_tasks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_scheduled_executions solid_queue_scheduled_executions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_scheduled_executions
+    ADD CONSTRAINT solid_queue_scheduled_executions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solid_queue_semaphores solid_queue_semaphores_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_semaphores
+    ADD CONSTRAINT solid_queue_semaphores_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: true_dls true_dls_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1872,6 +2451,202 @@ CREATE UNIQUE INDEX index_models_on_name ON public.models USING btree (name);
 
 
 --
+-- Name: index_solid_queue_blocked_executions_for_maintenance; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_blocked_executions_for_maintenance ON public.solid_queue_blocked_executions USING btree (expires_at, concurrency_key);
+
+
+--
+-- Name: index_solid_queue_blocked_executions_for_release; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_blocked_executions_for_release ON public.solid_queue_blocked_executions USING btree (concurrency_key, priority, job_id);
+
+
+--
+-- Name: index_solid_queue_blocked_executions_on_job_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_blocked_executions_on_job_id ON public.solid_queue_blocked_executions USING btree (job_id);
+
+
+--
+-- Name: index_solid_queue_claimed_executions_on_job_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_claimed_executions_on_job_id ON public.solid_queue_claimed_executions USING btree (job_id);
+
+
+--
+-- Name: index_solid_queue_claimed_executions_on_process_id_and_job_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_claimed_executions_on_process_id_and_job_id ON public.solid_queue_claimed_executions USING btree (process_id, job_id);
+
+
+--
+-- Name: index_solid_queue_dispatch_all; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_dispatch_all ON public.solid_queue_scheduled_executions USING btree (scheduled_at, priority, job_id);
+
+
+--
+-- Name: index_solid_queue_failed_executions_on_job_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_failed_executions_on_job_id ON public.solid_queue_failed_executions USING btree (job_id);
+
+
+--
+-- Name: index_solid_queue_jobs_for_alerting; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_jobs_for_alerting ON public.solid_queue_jobs USING btree (scheduled_at, finished_at);
+
+
+--
+-- Name: index_solid_queue_jobs_for_filtering; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_jobs_for_filtering ON public.solid_queue_jobs USING btree (queue_name, finished_at);
+
+
+--
+-- Name: index_solid_queue_jobs_on_active_job_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_jobs_on_active_job_id ON public.solid_queue_jobs USING btree (active_job_id);
+
+
+--
+-- Name: index_solid_queue_jobs_on_class_name; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_jobs_on_class_name ON public.solid_queue_jobs USING btree (class_name);
+
+
+--
+-- Name: index_solid_queue_jobs_on_finished_at; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_jobs_on_finished_at ON public.solid_queue_jobs USING btree (finished_at);
+
+
+--
+-- Name: index_solid_queue_pauses_on_queue_name; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_pauses_on_queue_name ON public.solid_queue_pauses USING btree (queue_name);
+
+
+--
+-- Name: index_solid_queue_poll_all; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_poll_all ON public.solid_queue_ready_executions USING btree (priority, job_id);
+
+
+--
+-- Name: index_solid_queue_poll_by_queue; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_poll_by_queue ON public.solid_queue_ready_executions USING btree (queue_name, priority, job_id);
+
+
+--
+-- Name: index_solid_queue_processes_on_last_heartbeat_at; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_processes_on_last_heartbeat_at ON public.solid_queue_processes USING btree (last_heartbeat_at);
+
+
+--
+-- Name: index_solid_queue_processes_on_name_and_supervisor_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_processes_on_name_and_supervisor_id ON public.solid_queue_processes USING btree (name, supervisor_id);
+
+
+--
+-- Name: index_solid_queue_processes_on_supervisor_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_processes_on_supervisor_id ON public.solid_queue_processes USING btree (supervisor_id);
+
+
+--
+-- Name: index_solid_queue_ready_executions_on_job_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_ready_executions_on_job_id ON public.solid_queue_ready_executions USING btree (job_id);
+
+
+--
+-- Name: index_solid_queue_recurring_executions_on_job_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_recurring_executions_on_job_id ON public.solid_queue_recurring_executions USING btree (job_id);
+
+
+--
+-- Name: index_solid_queue_recurring_executions_on_task_key_and_run_at; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_recurring_executions_on_task_key_and_run_at ON public.solid_queue_recurring_executions USING btree (task_key, run_at);
+
+
+--
+-- Name: index_solid_queue_recurring_tasks_on_key; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_recurring_tasks_on_key ON public.solid_queue_recurring_tasks USING btree (key);
+
+
+--
+-- Name: index_solid_queue_recurring_tasks_on_static; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_recurring_tasks_on_static ON public.solid_queue_recurring_tasks USING btree (static);
+
+
+--
+-- Name: index_solid_queue_scheduled_executions_on_job_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_scheduled_executions_on_job_id ON public.solid_queue_scheduled_executions USING btree (job_id);
+
+
+--
+-- Name: index_solid_queue_semaphores_on_expires_at; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_semaphores_on_expires_at ON public.solid_queue_semaphores USING btree (expires_at);
+
+
+--
+-- Name: index_solid_queue_semaphores_on_key; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_solid_queue_semaphores_on_key ON public.solid_queue_semaphores USING btree (key);
+
+
+--
+-- Name: index_solid_queue_semaphores_on_key_and_value; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX index_solid_queue_semaphores_on_key_and_value ON public.solid_queue_semaphores USING btree (key, value);
+
+
+--
+-- Name: index_tournament_results_on_team_id_and_tournament_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_tournament_results_on_team_id_and_tournament_id ON public.tournament_results USING btree (team_id, tournament_id);
+
+
+--
 -- Name: index_true_dls_on_model_id; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1900,17 +2675,17 @@ CREATE INDEX tournament_results_team_id_index ON public.tournament_results USING
 
 
 --
--- Name: tournament_results_team_id_tournament_id_index; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX tournament_results_team_id_tournament_id_index ON public.tournament_results USING btree (team_id, tournament_id);
-
-
---
 -- Name: tournament_results_tournament_id_index; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE INDEX tournament_results_tournament_id_index ON public.tournament_results USING btree (tournament_id);
+
+
+--
+-- Name: tournament_rosters_id_index; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX tournament_rosters_id_index ON public.tournament_rosters USING btree (id);
 
 
 --
@@ -2082,11 +2857,59 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
+-- Name: solid_queue_recurring_executions fk_rails_318a5533ed; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_recurring_executions
+    ADD CONSTRAINT fk_rails_318a5533ed FOREIGN KEY (job_id) REFERENCES public.solid_queue_jobs(id) ON DELETE CASCADE;
+
+
+--
+-- Name: solid_queue_failed_executions fk_rails_39bbc7a631; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_failed_executions
+    ADD CONSTRAINT fk_rails_39bbc7a631 FOREIGN KEY (job_id) REFERENCES public.solid_queue_jobs(id) ON DELETE CASCADE;
+
+
+--
+-- Name: solid_queue_blocked_executions fk_rails_4cd34e2228; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_blocked_executions
+    ADD CONSTRAINT fk_rails_4cd34e2228 FOREIGN KEY (job_id) REFERENCES public.solid_queue_jobs(id) ON DELETE CASCADE;
+
+
+--
+-- Name: solid_queue_ready_executions fk_rails_81fcbd66af; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_ready_executions
+    ADD CONSTRAINT fk_rails_81fcbd66af FOREIGN KEY (job_id) REFERENCES public.solid_queue_jobs(id) ON DELETE CASCADE;
+
+
+--
 -- Name: true_dls fk_rails_8bcd904df1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.true_dls
     ADD CONSTRAINT fk_rails_8bcd904df1 FOREIGN KEY (model_id) REFERENCES public.models(id);
+
+
+--
+-- Name: solid_queue_claimed_executions fk_rails_9cfe4d4944; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_claimed_executions
+    ADD CONSTRAINT fk_rails_9cfe4d4944 FOREIGN KEY (job_id) REFERENCES public.solid_queue_jobs(id) ON DELETE CASCADE;
+
+
+--
+-- Name: solid_queue_scheduled_executions fk_rails_c4316f352d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.solid_queue_scheduled_executions
+    ADD CONSTRAINT fk_rails_c4316f352d FOREIGN KEY (job_id) REFERENCES public.solid_queue_jobs(id) ON DELETE CASCADE;
 
 
 --
