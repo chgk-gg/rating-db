@@ -135,22 +135,6 @@ CREATE TABLE b.player_rating (
 ALTER TABLE b.player_rating OWNER TO postgres;
 
 --
--- Name: player_ranking; Type: MATERIALIZED VIEW; Schema: b; Owner: postgres
---
-
-CREATE MATERIALIZED VIEW b.player_ranking AS
- SELECT rank() OVER (PARTITION BY player_rating.release_id ORDER BY player_rating.rating DESC) AS place,
-    player_rating.player_id,
-    player_rating.rating,
-    player_rating.rating_change,
-    player_rating.release_id
-   FROM b.player_rating
-  WITH NO DATA;
-
-
-ALTER MATERIALIZED VIEW b.player_ranking OWNER TO postgres;
-
---
 -- Name: player_rating_by_tournament_id_seq_new; Type: SEQUENCE; Schema: b; Owner: postgres
 --
 
@@ -178,7 +162,7 @@ CREATE TABLE b.player_rating_by_tournament (
     initial_score integer,
     tournament_id integer
 )
-WITH (autovacuum_analyze_threshold='10000', autovacuum_analyze_scale_factor='0.05', autovacuum_vacuum_threshold='10000', autovacuum_vacuum_scale_factor='0.01', autovacuum_vacuum_cost_delay='0');
+WITH (autovacuum_analyze_threshold='300000', autovacuum_analyze_scale_factor='0.2', autovacuum_vacuum_threshold='300000', autovacuum_vacuum_scale_factor='0.2', autovacuum_vacuum_cost_delay='0');
 
 
 ALTER TABLE b.player_rating_by_tournament OWNER TO postgres;
@@ -297,7 +281,8 @@ ALTER SEQUENCE b.team_lost_heredity_id_seq OWNED BY b.team_lost_heredity.id;
 -- Name: team_ranking; Type: MATERIALIZED VIEW; Schema: b; Owner: postgres
 --
 
-CREATE MATERIALIZED VIEW b.team_ranking AS
+CREATE MATERIALIZED VIEW b.team_ranking
+WITH (fillfactor='90') AS
  SELECT rank() OVER (PARTITION BY team_rating.release_id ORDER BY team_rating.rating DESC) AS place,
     team_rating.team_id,
     team_rating.rating,
@@ -1397,6 +1382,150 @@ CREATE TABLE public.teams (
 ALTER TABLE public.teams OWNER TO postgres;
 
 --
+-- Name: tournament_appeal_jury; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tournament_appeal_jury (
+    id bigint NOT NULL,
+    tournament_id integer,
+    player_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.tournament_appeal_jury OWNER TO postgres;
+
+--
+-- Name: tournament_appeal_jury_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tournament_appeal_jury_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.tournament_appeal_jury_id_seq OWNER TO postgres;
+
+--
+-- Name: tournament_appeal_jury_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tournament_appeal_jury_id_seq OWNED BY public.tournament_appeal_jury.id;
+
+
+--
+-- Name: tournament_editors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tournament_editors (
+    id bigint NOT NULL,
+    tournament_id integer,
+    player_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.tournament_editors OWNER TO postgres;
+
+--
+-- Name: tournament_editors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tournament_editors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.tournament_editors_id_seq OWNER TO postgres;
+
+--
+-- Name: tournament_editors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tournament_editors_id_seq OWNED BY public.tournament_editors.id;
+
+
+--
+-- Name: tournament_game_jury; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tournament_game_jury (
+    id bigint NOT NULL,
+    tournament_id integer,
+    player_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.tournament_game_jury OWNER TO postgres;
+
+--
+-- Name: tournament_game_jury_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tournament_game_jury_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.tournament_game_jury_id_seq OWNER TO postgres;
+
+--
+-- Name: tournament_game_jury_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tournament_game_jury_id_seq OWNED BY public.tournament_game_jury.id;
+
+
+--
+-- Name: tournament_organizers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tournament_organizers (
+    id bigint NOT NULL,
+    tournament_id integer,
+    player_id integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+ALTER TABLE public.tournament_organizers OWNER TO postgres;
+
+--
+-- Name: tournament_organizers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.tournament_organizers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.tournament_organizers_id_seq OWNER TO postgres;
+
+--
+-- Name: tournament_organizers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.tournament_organizers_id_seq OWNED BY public.tournament_organizers.id;
+
+
+--
 -- Name: tournament_results; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -1800,6 +1929,34 @@ ALTER TABLE ONLY public.solid_queue_semaphores ALTER COLUMN id SET DEFAULT nextv
 
 
 --
+-- Name: tournament_appeal_jury id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tournament_appeal_jury ALTER COLUMN id SET DEFAULT nextval('public.tournament_appeal_jury_id_seq'::regclass);
+
+
+--
+-- Name: tournament_editors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tournament_editors ALTER COLUMN id SET DEFAULT nextval('public.tournament_editors_id_seq'::regclass);
+
+
+--
+-- Name: tournament_game_jury id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tournament_game_jury ALTER COLUMN id SET DEFAULT nextval('public.tournament_game_jury_id_seq'::regclass);
+
+
+--
+-- Name: tournament_organizers id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tournament_organizers ALTER COLUMN id SET DEFAULT nextval('public.tournament_organizers_id_seq'::regclass);
+
+
+--
 -- Name: tournament_results id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1848,7 +2005,7 @@ ALTER TABLE ONLY b.django_migrations
 --
 
 ALTER TABLE ONLY b.player_rating_by_tournament
-    ADD CONSTRAINT player_rating_by_tournament_new_pk UNIQUE (release_id, player_id, tournament_id);
+    ADD CONSTRAINT player_rating_by_tournament_new_pk UNIQUE (release_id, player_id, tournament_id) WITH (fillfactor='80');
 
 
 --
@@ -1856,7 +2013,7 @@ ALTER TABLE ONLY b.player_rating_by_tournament
 --
 
 ALTER TABLE ONLY b.player_rating_by_tournament
-    ADD CONSTRAINT player_rating_by_tournament_new_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT player_rating_by_tournament_new_pkey PRIMARY KEY (id) WITH (fillfactor='80');
 
 
 --
@@ -1864,7 +2021,7 @@ ALTER TABLE ONLY b.player_rating_by_tournament
 --
 
 ALTER TABLE ONLY b.player_rating
-    ADD CONSTRAINT player_rating_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT player_rating_pkey PRIMARY KEY (id) WITH (fillfactor='80');
 
 
 --
@@ -2204,6 +2361,38 @@ ALTER TABLE ONLY public.solid_queue_semaphores
 
 
 --
+-- Name: tournament_appeal_jury tournament_appeal_jury_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tournament_appeal_jury
+    ADD CONSTRAINT tournament_appeal_jury_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tournament_editors tournament_editors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tournament_editors
+    ADD CONSTRAINT tournament_editors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tournament_game_jury tournament_game_jury_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tournament_game_jury
+    ADD CONSTRAINT tournament_game_jury_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tournament_organizers tournament_organizers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tournament_organizers
+    ADD CONSTRAINT tournament_organizers_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: true_dls true_dls_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2220,31 +2409,10 @@ ALTER TABLE ONLY public.wrong_team_ids
 
 
 --
--- Name: player_ranking_place_idx; Type: INDEX; Schema: b; Owner: postgres
---
-
-CREATE INDEX player_ranking_place_idx ON b.player_ranking USING btree (place);
-
-
---
--- Name: player_ranking_player_id_idx; Type: INDEX; Schema: b; Owner: postgres
---
-
-CREATE INDEX player_ranking_player_id_idx ON b.player_ranking USING btree (player_id);
-
-
---
--- Name: player_ranking_release_id_idx; Type: INDEX; Schema: b; Owner: postgres
---
-
-CREATE INDEX player_ranking_release_id_idx ON b.player_ranking USING btree (release_id);
-
-
---
 -- Name: player_rating_by_tournament_player_id_index; Type: INDEX; Schema: b; Owner: postgres
 --
 
-CREATE INDEX player_rating_by_tournament_player_id_index ON b.player_rating_by_tournament USING btree (player_id);
+CREATE INDEX player_rating_by_tournament_player_id_index ON b.player_rating_by_tournament USING btree (player_id) WITH (fillfactor='80');
 
 
 --
@@ -2269,24 +2437,31 @@ CREATE INDEX releases_release_id_72319d1e ON b.team_rating USING btree (release_
 
 
 --
--- Name: team_ranking_place_idx; Type: INDEX; Schema: b; Owner: postgres
+-- Name: team_ranking_new_place_idx; Type: INDEX; Schema: b; Owner: postgres
 --
 
-CREATE INDEX team_ranking_place_idx ON b.team_ranking USING btree (place);
-
-
---
--- Name: team_ranking_release_id_idx; Type: INDEX; Schema: b; Owner: postgres
---
-
-CREATE INDEX team_ranking_release_id_idx ON b.team_ranking USING btree (release_id);
+CREATE INDEX team_ranking_new_place_idx ON b.team_ranking USING btree (place);
 
 
 --
--- Name: team_ranking_team_id_idx; Type: INDEX; Schema: b; Owner: postgres
+-- Name: team_ranking_new_release_id_idx; Type: INDEX; Schema: b; Owner: postgres
 --
 
-CREATE INDEX team_ranking_team_id_idx ON b.team_ranking USING btree (team_id);
+CREATE INDEX team_ranking_new_release_id_idx ON b.team_ranking USING btree (release_id);
+
+
+--
+-- Name: team_ranking_new_team_id_idx; Type: INDEX; Schema: b; Owner: postgres
+--
+
+CREATE INDEX team_ranking_new_team_id_idx ON b.team_ranking USING btree (team_id);
+
+
+--
+-- Name: team_ranking_new_unique_idx; Type: INDEX; Schema: b; Owner: postgres
+--
+
+CREATE UNIQUE INDEX team_ranking_new_unique_idx ON b.team_ranking USING btree (team_id, release_id);
 
 
 --
@@ -2637,6 +2812,41 @@ CREATE UNIQUE INDEX index_solid_queue_semaphores_on_key ON public.solid_queue_se
 --
 
 CREATE INDEX index_solid_queue_semaphores_on_key_and_value ON public.solid_queue_semaphores USING btree (key, value);
+
+
+--
+-- Name: index_teams_on_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_teams_on_id ON public.teams USING btree (id);
+
+
+--
+-- Name: index_tournament_appeal_jury_on_tournament_id_and_player_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_tournament_appeal_jury_on_tournament_id_and_player_id ON public.tournament_appeal_jury USING btree (tournament_id, player_id);
+
+
+--
+-- Name: index_tournament_editors_on_tournament_id_and_player_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_tournament_editors_on_tournament_id_and_player_id ON public.tournament_editors USING btree (tournament_id, player_id);
+
+
+--
+-- Name: index_tournament_game_jury_on_tournament_id_and_player_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_tournament_game_jury_on_tournament_id_and_player_id ON public.tournament_game_jury USING btree (tournament_id, player_id);
+
+
+--
+-- Name: index_tournament_organizers_on_tournament_id_and_player_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_tournament_organizers_on_tournament_id_and_player_id ON public.tournament_organizers USING btree (tournament_id, player_id);
 
 
 --
