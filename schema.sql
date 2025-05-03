@@ -860,7 +860,9 @@ CREATE TABLE public.players (
     first_name text,
     patronymic text,
     last_name text,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone,
+    date_died date,
+    got_questions_tag integer
 );
 
 
@@ -2626,6 +2628,20 @@ CREATE UNIQUE INDEX index_models_on_name ON public.models USING btree (name);
 
 
 --
+-- Name: index_players_on_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_players_on_id ON public.players USING btree (id);
+
+
+--
+-- Name: index_seasons_on_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_seasons_on_id ON public.seasons USING btree (id);
+
+
+--
 -- Name: index_solid_queue_blocked_executions_for_maintenance; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2854,6 +2870,13 @@ CREATE UNIQUE INDEX index_tournament_organizers_on_tournament_id_and_player_id O
 --
 
 CREATE UNIQUE INDEX index_tournament_results_on_team_id_and_tournament_id ON public.tournament_results USING btree (team_id, tournament_id);
+
+
+--
+-- Name: index_towns_on_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_towns_on_id ON public.towns USING btree (id);
 
 
 --
