@@ -9,4 +9,5 @@ else
 fi
 
 url="https://pub-5200ce7fb4b64b5ea3b6b0b0f05cfcd5.r2.dev/${date_to_use}_rating.backup"
+echo "Downloading ${date_to_use}_rating.backup from to rating.backup"
 curl -o rating.backup "$url"
