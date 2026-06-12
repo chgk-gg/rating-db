@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:15
+    image: postgres:17
     volumes:
       - ./rating.backup:/backup/rating.backup
       - ./restore.sh:/docker-entrypoint-initdb.d/restore.sh
