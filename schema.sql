@@ -2,12 +2,15 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 15.12 (Debian 15.12-1.pgdg120+1)
--- Dumped by pg_dump version 16.8 (Ubuntu 16.8-1.pgdg24.04+1)
+\restrict gBTKca8InZ2XvJs0d1HzXT720dibCObq1s7lU4IIXFcHsZNzFI4VEGIcQxgba8I
+
+-- Dumped from database version 17.10 (Debian 17.10-1.pgdg13+1)
+-- Dumped by pg_dump version 17.10 (Ubuntu 17.10-1.pgdg24.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -54,7 +57,7 @@ CREATE TABLE b.release (
     title character varying(250) NOT NULL,
     date date NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    hash integer,
+    hash bigint,
     q numeric(7,5)
 );
 
@@ -283,12 +286,12 @@ ALTER SEQUENCE b.team_lost_heredity_id_seq OWNED BY b.team_lost_heredity.id;
 
 CREATE MATERIALIZED VIEW b.team_ranking
 WITH (fillfactor='90') AS
- SELECT rank() OVER (PARTITION BY team_rating.release_id ORDER BY team_rating.rating DESC) AS place,
-    team_rating.team_id,
-    team_rating.rating,
-    team_rating.rating_change,
-    team_rating.release_id,
-    team_rating.trb
+ SELECT rank() OVER (PARTITION BY release_id ORDER BY rating DESC) AS place,
+    team_id,
+    rating,
+    rating_change,
+    release_id,
+    trb
    FROM b.team_rating
   WITH NO DATA;
 
@@ -2411,6 +2414,13 @@ ALTER TABLE ONLY public.wrong_team_ids
 
 
 --
+-- Name: idx_tournament_result_tournament_team; Type: INDEX; Schema: b; Owner: postgres
+--
+
+CREATE INDEX idx_tournament_result_tournament_team ON b.tournament_result USING btree (tournament_id, team_id);
+
+
+--
 -- Name: player_rating_by_tournament_player_id_index; Type: INDEX; Schema: b; Owner: postgres
 --
 
@@ -2618,6 +2628,13 @@ CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING 
 --
 
 CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: index_base_rosters_on_season_id_and_team_id_and_player_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX index_base_rosters_on_season_id_and_team_id_and_player_id ON public.base_rosters USING btree (season_id, team_id, player_id);
 
 
 --
@@ -3155,4 +3172,6 @@ REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
+
+\unrestrict gBTKca8InZ2XvJs0d1HzXT720dibCObq1s7lU4IIXFcHsZNzFI4VEGIcQxgba8I
 
